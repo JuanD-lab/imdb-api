@@ -1,0 +1,134 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "IMDB REST API",
+        "version": "1.0",
+        "description": "REST API para poder obtener la información acerca de películas, series, actores y directores del cine."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1",
+            "description": "Development"
+        },
+        {
+            "url": "https://myapp.heroku/api/v1",
+            "description": "Production"
+        }
+    ],
+    "paths": {
+        "/actors":{
+            "get": {
+                "description": "Obtener todos los actores de la DB",
+                "tags": ["Actors"],
+                "responses": {
+                    "200":{
+                        "description": "Lista de actores"
+                    }
+                }
+            },
+            "post":{
+                "description": "Crear un actor",
+                "tags": ["Actors"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Actor"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Se ha creado un actor satisfactoriamente"
+                    }
+                }
+            }
+        },
+        "/directors":{
+            "get":{
+                "description": "Obtener todos los directores",
+                "tags": ["Directors"],
+                "responses": {
+                    "200":{
+                        "description": "Lista de directores"
+                    }
+                }
+            },
+            "post":{
+                "description": "Crear un director",
+                "tags": ["Directors"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Director"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Se ha creado un director satisfactoriamente"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Actor":{
+                "properties": {
+                    "firstname": {
+                        "type": "string"                        
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "description": "Date of birth",
+                        "example": "1990-02-01"
+                    },
+                    "biography": {
+                        "type": "string"
+                    },
+                    "profile_photo": {
+                        "type": "string",
+                        "description": "image URL",
+                        "example": "https://apihandyman.io/images/commons/openapi/openapi-map.png"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Director":{
+                "properties": {
+                    "firstname": {
+                        "type": "string"                        
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "description": "Date of birth",
+                        "example": "1990-02-01"
+                    },
+                    "biography": {
+                        "type": "string"
+                    },
+                    "profile_photo": {
+                        "type": "string",
+                        "description": "image URL",
+                        "example": "https://apihandyman.io/images/commons/openapi/openapi-map.png"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}
