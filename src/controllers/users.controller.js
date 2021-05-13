@@ -1,4 +1,5 @@
 const {Users} = require('../models')
+const bcrypt = require('bcryptjs');
 
 const list = async(req, res, next) => {
     try {
@@ -12,9 +13,12 @@ const list = async(req, res, next) => {
 
 const create = async (req, res) => {
     try{
-        const actor = await Users.create(req.body);
-        res.json(actor);
+        const {first_name, password} = req.body
+        const hash = await bcrypt.hash(password, 10);
+        await Users.create({first_name: first_name, password: hash});
+        res.send("todo bien");
     }catch(error){
+        console.log(error);
         next(error);
     }
 }
