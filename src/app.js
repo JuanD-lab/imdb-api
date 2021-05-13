@@ -11,6 +11,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 //Routes
 const actorsRoutes = require('./routes/actors.routes');
 const directorsRoutes = require('./routes/directors.routes');
+const usersRoutes = require('./routes/users.routes');
 
 //Middleware
 app.use(cors());
@@ -19,6 +20,7 @@ app.use(express.json())
 
 app.use("/api/v1/", actorsRoutes)
 app.use("/api/v1/", directorsRoutes)
+app.use("/api/v1/", usersRoutes)
 
 //Error handler
 app.use((err, req, res, next) => {
