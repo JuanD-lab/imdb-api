@@ -1,12 +1,12 @@
 const {Router} = require('express')
 const route = Router()
 //Methods
-const {getActors, createActors, updateActors, deleteActors} = require('../controllers/actors.controller')
+const {list, create, update, destroy} = require('../controllers/actors.controller')
 
 //Endpoints
-route.get("/actors", getActors)//List
-route.post("/actors", createActors)//Create
-route.put("/actors", updateActors)//Update
-route.delete("/actors/:id", deleteActors)//Delete
+route.get("/actors", list)//List
+route.post("/actors", create)//Create
+route.put("/actors", update)//Update
+route.delete("/actors/:id", destroy)//Delete
 
 module.exports = route;

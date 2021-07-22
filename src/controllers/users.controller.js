@@ -13,9 +13,9 @@ const list = async(req, res, next) => {
 
 const create = async (req, res) => {
     try{
-        const {first_name, password} = req.body
+        const {first_name, password, last_name, email} = req.body
         const hash = await bcrypt.hash(password, 10);
-        await Users.create({first_name: first_name, password: hash});
+        await Users.create({first_name: first_name, password: hash, last_name: last_name, email: email});
         res.send("todo bien");
     }catch(error){
         console.log(error);
