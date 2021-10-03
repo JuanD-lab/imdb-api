@@ -29,7 +29,7 @@ app.use(logger('combined', {stream: fs.createWriteStream('access.log', { flags: 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 /* Public routes */
-app.get("/", (req, res) => res.json({"imdb-api": "1.0.0"}))
+app.get("/", (req, res) => res.json({"imdb-api": "1.0.1"}))
 
 app.post("/api/v1/gallery", upload.single('image'), (req, res) => {
   try {
