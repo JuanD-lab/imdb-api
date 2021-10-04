@@ -7,7 +7,6 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("../swagger.json");
 const cors = require("cors");
 const helmet = require("helmet");
-const { verifyToken } = require("./middlewares/auth.middleware");
 const multer = require("multer");
 const createStorage = require("./helpers/multer");
 const { sendEmail, emailOptions } = require("./helpers/nodemailer");
@@ -44,7 +43,7 @@ app.post("/api/v1/gallery", upload.single("image"), (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-app.use("/login", loggin);
+app.use("/", loggin);
 //mailing for reset pass
 app.post("/api/v1/reset-password", (req, res) => {
         emailOptions.subject = "Reset password";

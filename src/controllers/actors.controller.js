@@ -9,7 +9,7 @@ const list = async(req, res, next) => {
     }
 }
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
     try{
         const actor = await Actors.create(req.body);
         res.json(actor);
@@ -18,7 +18,7 @@ const create = async (req, res) => {
     }
 }
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
     try {
         const {id} = req.params
         const newData = await Actors.update(req.body,{
@@ -30,7 +30,7 @@ const update = async (req, res) => {
     }
 }
 
-const destroy = async (req, res) => {
+const destroy = async (req, res, next) => {
     try{
         const id = req.params.id;
         const actor = await Actors.destroy({where: {id}});
