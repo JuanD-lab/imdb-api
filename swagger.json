@@ -11,7 +11,7 @@
             "description": "Development"
         },
         {
-            "url": "https://myapp.heroku/api/v1",
+            "url": "https://imdb-lab.herokuapp.com/api/v1/",
             "description": "Production"
         }
     ],
