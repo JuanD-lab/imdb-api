@@ -61,7 +61,7 @@ const sendEmail = async (options) => {
 
 const emailOptions = {
     subject: "Probando",
-    to: "yo-juan@outlook.com",
+    to: "mail@mail.com",
     from: process.env.G_USER
 }
 
