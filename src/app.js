@@ -17,6 +17,7 @@ const upload = multer({ storage: storage });
 
 //Routes
 const actorsRoutes = require("./routes/actors.routes");
+const moviesRoutes = require("./routes/movies.routes");
 const directorsRoutes = require("./routes/directors.routes");
 const usersRoutes = require("./routes/users.routes");
 const loggin = require("./routes/login.routes");
@@ -57,6 +58,7 @@ app.post("/api/v1/reset-password", (req, res) => {
 /* Protected routes */
 app.use("/api/v1/", actorsRoutes);
 app.use("/api/v1/", directorsRoutes);
+app.use("/api/v1/", moviesRoutes);
 app.use("/api/v1/", usersRoutes);
 
 //Error handler
