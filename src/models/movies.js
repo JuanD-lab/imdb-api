@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
                 through: "genres_movies",
                 foreignKey: "movie_id",
             });
+            this.belongsToMany(models.Actors, {
+                through: "actors_movies",
+                foreignKey: "movie_id",
+            });
+            this.belongsToMany(models.Directors, {
+                through: "directors_movies",
+                foreignKey: "movie_id",
+            });
         }
     }
     Movies.init(

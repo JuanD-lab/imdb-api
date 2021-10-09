@@ -1,6 +1,6 @@
 const {Users} = require('../models')
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const createToken = require('../middlewares/createToken.middleware')
 
 
 const compare = async (req, res, next) => {
@@ -12,7 +12,8 @@ const compare = async (req, res, next) => {
             const userPass = user.password
             const validPass = await bcrypt.compare(password, userPass)
             if (validPass) {
-                const token = jwt.sign(user, process.env.JWT_KEY, {algorithm: 'HS512', expiresIn: '1h'})
+                const token = createToken(user)
+                user.reset_token = token
                 res.json({token})
             } else {
                 res.status(400).json("Incorrect credentials")

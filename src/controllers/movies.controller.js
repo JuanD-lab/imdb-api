@@ -1,4 +1,4 @@
-const { Movies, GenresMovies, Genres } = require("../models");
+const { Movies, Genres, Actors } = require("../models");
 
 const getOne = async(req,res,next) => {
     const id = parseInt(req.params.id);
@@ -11,6 +11,10 @@ const getOne = async(req,res,next) => {
                     attributes: ["id", "name"],
                     through: { attributes: [] }
                 },
+                {
+                    model:Actors,
+                    through: { attributes: [] }
+                }
             ]
         });
         if(content){
@@ -33,6 +37,10 @@ const list = async (req, res, next) => {
                     attributes: ["id", "name"],
                     through: { attributes: [] },
                 },
+                {
+                    model:Actors,
+                    through: { attributes: [] }
+                }
                 
             ],
         });
@@ -44,7 +52,9 @@ const list = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const movie = await Movies.create(req.body);
+        const {title, year, description} = req.body
+        const {actors, directors, genres} = req.body;
+        
         res.json(movie);
     } catch (error) {
         next(error);

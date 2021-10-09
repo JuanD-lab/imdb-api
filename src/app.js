@@ -49,7 +49,7 @@ app.use("/", loggin);
 app.post("/api/v1/reset-password", (req, res) => {
         emailOptions.subject = "Reset password";
         emailOptions["template"] = "email";
-        emailOptions["context"] = { title: "Reestablecer" };
+        emailOptions["context"] = { title: "Restore password" };
         sendEmail(emailOptions);
     
     res.status(200).json("Correo enviado");

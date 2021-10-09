@@ -21,17 +21,19 @@ module.exports = {
         type: Sequelize.STRING
       },
       reset_token: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       active: {
         type: Sequelize.BOOLEAN
       },
       created_at: {
         allowNull: true,
+        defaultValue: Sequelize.fn('NOW'),
         type: Sequelize.DATE
       },
       updated_at: {
         allowNull: true,
+        defaultValue: Sequelize.fn('NOW'),
         type: Sequelize.DATE
       }
     });
