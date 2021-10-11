@@ -1,4 +1,5 @@
 const {Actors} = require('../models')
+const {ViewsMethods} = require('./controller')
 
 const list = async(req, res, next) => {
     try {
@@ -8,6 +9,7 @@ const list = async(req, res, next) => {
         next(error)
     }
 }
+
 
 const create = async (req, res, next) => {
     try{

@@ -73,6 +73,35 @@
                     }
                 }
             }
+        },
+        "/movies":{
+            "get":{
+                "description": "Obtener todos las películas",
+                "tags": ["Movies"],
+                "responses": {
+                    "200":{
+                        "description": "Lista de películas"
+                    }
+                }
+            },
+            "post":{
+                "description": "Crear una película",
+                "tags": ["Movies"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Movie"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Se ha creado una película satisfactoriamente"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -126,6 +155,21 @@
                     },
                     "active": {
                         "type": "boolean"
+                    }
+                }
+            },
+            "Movie":{
+                "properties": {
+                    "title": {
+                        "type": "string"                        
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "string",
+                        "description": "Year of release",
+                        "example": "1990/02/01"
                     }
                 }
             }
