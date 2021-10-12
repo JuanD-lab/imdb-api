@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "IMDB REST API",
-        "version": "1.0",
+        "version": "1.0.1",
         "description": "REST API para poder obtener la información acerca de películas, series, actores y directores del cine."
     },
     "servers": [
@@ -11,7 +11,7 @@
             "description": "Development"
         },
         {
-            "url": "https://myapp.heroku/api/v1",
+            "url": "https://imdb-lab.herokuapp.com/api/v1/",
             "description": "Production"
         }
     ],
@@ -45,6 +45,53 @@
                 }
             }
         },
+        "/actors/{id}":{
+            "get": {
+                "description": "Obtener un actor en particular",
+                "parameters":[
+                    {"in": "path", "required": true, "name": "id", "schema": {"type": "integer"}}
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Actor gotten correctly"
+                    }
+                },
+                "tags": ["Actors"]
+            },
+            "delete": {
+                "description": "To delete an actor",
+                "parameters":[
+                    {"in": "path", "required": true, "name": "id", "schema": {"type": "integer"}}
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Actor deleted"
+                    }
+                },
+                "tags": ["Actors"]
+            },
+            "put": {
+                "description": "To update an actor",
+                "parameters":[
+                    {"in": "path", "required": true, "name": "id", "schema": {"type": "integer"}}
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Actor updated"
+                    }
+                },
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Actor"
+                            }
+                        }
+                    }
+                },
+                "tags": ["Actors"]
+            }
+        },
         "/directors":{
             "get":{
                 "description": "Obtener todos los directores",
@@ -70,6 +117,64 @@
                 "responses": {
                     "201": {
                         "description": "Se ha creado un director satisfactoriamente"
+                    }
+                }
+            }
+        },
+        "/movies":{
+            "get":{
+                "description": "Obtener todos las películas",
+                "tags": ["Movies"],
+                "responses": {
+                    "200":{
+                        "description": "Lista de películas"
+                    }
+                }
+            },
+            "post":{
+                "description": "Crear una película",
+                "tags": ["Movies"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Movie"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Se ha creado una película satisfactoriamente"
+                    }
+                }
+            }
+        },
+        "/genres":{
+            "get": {
+                "description": "Obtener todos los géneros de la DB",
+                "tags": ["Genres"],
+                "responses": {
+                    "200":{
+                        "description": "Lista de géneros"
+                    }
+                }
+            },
+            "post":{
+                "description": "Crear un género",
+                "tags": ["Genres"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Genre"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Se ha creado un género satisfactoriamente"
                     }
                 }
             }
@@ -123,6 +228,31 @@
                         "type": "string",
                         "description": "image URL",
                         "example": "https://apihandyman.io/images/commons/openapi/openapi-map.png"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Movie":{
+                "properties": {
+                    "title": {
+                        "type": "string"                        
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "string",
+                        "description": "Year of release",
+                        "example": "1990/02/01"
+                    }
+                }
+            },
+            "Genre":{
+                "properties": {
+                    "name": {
+                        "type": "string"                        
                     },
                     "active": {
                         "type": "boolean"
