@@ -44,7 +44,7 @@ const list = async(req, res, next) => {
 const create = async (req, res, next) => {
     try{
         const actor = await Actors.create(req.body);
-        res.json(actor);
+        res.status(201).json(actor);
     }catch(error){
         next(error);
     }
