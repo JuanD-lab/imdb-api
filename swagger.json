@@ -20,6 +20,15 @@
             "post": {
                 "description": "Crear un nuevo usuario (registro)",
                 "tags": ["Users"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Users"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201":{
                         "description": "Registro de usuario"
