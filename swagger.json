@@ -56,9 +56,6 @@
                         "description": "Actor gotten correctly"
                     }
                 },
-                "security": [{
-                    "jwt_token": []
-                }],
                 "tags": ["Actors"]
             },
             "delete": {
@@ -71,9 +68,6 @@
                         "description": "Actor deleted"
                     }
                 },
-                "security": [{
-                    "jwt_token": []
-                }],
                 "tags": ["Actors"]
             },
             "put": {
