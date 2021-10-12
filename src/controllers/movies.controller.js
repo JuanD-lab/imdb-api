@@ -1,32 +1,35 @@
-const { Movies, Genres, Actors } = require("../models");
+const { Movies, Genres, Actors, ActorsMovies, DirectorsMovies, GenresMovies } = require("../models");
 
-const getOne = async(req,res,next) => {
+const getOne = async (req, res, next) => {
     const id = parseInt(req.params.id);
-    try{
+    try {
         let content = await Movies.findOne({
-            where: {id: id},
+            where: { id: id },
             include: [
                 {
-                    model:Genres,
+                    model: Genres,
                     attributes: ["id", "name"],
-                    through: { attributes: [] }
+                    through: { attributes: [] },
                 },
                 {
-                    model:Actors,
-                    through: { attributes: [] }
-                }
-            ]
+                    model: Actors,
+                    through: { attributes: [] },
+                },
+            ],
         });
-        if(content){
+        if (content) {
             return res.json(content);
         } else {
-            return res.status(404).json({message: `The content with id = ${id} does not exist`});
+            return res
+                .status(404)
+                .json({
+                    message: `The content with id = ${id} does not exist`,
+                });
         }
-    }catch(error){
+    } catch (error) {
         next(error);
     }
-}
-
+};
 
 const list = async (req, res, next) => {
     try {
@@ -38,10 +41,9 @@ const list = async (req, res, next) => {
                     through: { attributes: [] },
                 },
                 {
-                    model:Actors,
-                    through: { attributes: [] }
-                }
-                
+                    model: Actors,
+                    through: { attributes: [] },
+                },
             ],
         });
         res.json(results);
@@ -51,11 +53,25 @@ const list = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
+    const { title, year, description } = req.body;
+    let { actors, directors, genres } = req.body;
     try {
-        const {title, year, description} = req.body
-        const {actors, directors, genres} = req.body;
-        
-        res.json(movie);
+        const movie = await Movies.create({
+            title: title,
+            year: year,
+            description: description,
+        });
+
+        const movie_id = movie.id
+        actors = actors.map(actor_id => {return {actor_id, movie_id}})
+        directors = directors.map(director_id => {return {director_id, movie_id}})
+        genres = genres.map(genre_id => {return {genre_id, movie_id}})
+
+        await ActorsMovies.bulkCreate(actors)
+        await DirectorsMovies.bulkCreate(directors)
+        await GenresMovies.bulkCreate(genres)
+
+        res.status(201).json(movie);
     } catch (error) {
         next(error);
     }
@@ -65,10 +81,11 @@ const update = async (req, res, next) => {
     try {
         const { id } = req.params;
         const newData = await Movies.update(req.body, {
-            where: id,
+            where: {id},
         });
         res.json(newData);
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
@@ -76,9 +93,19 @@ const update = async (req, res, next) => {
 const destroy = async (req, res, next) => {
     try {
         const id = req.params.id;
+        await ActorsMovies.destroy({where: {movie_id: id}});
+        await DirectorsMovies.destroy({where: {movie_id: id}});
+        await GenresMovies.destroy({where: {movie_id: id}});
         const movie = await Movies.destroy({ where: { id } });
-        res.json(movie);
+        
+        if(movie){
+            return res.json(movie);
+        } else {
+            return res.status(204).json({message: `The movie with id = ${id} does not exist`});
+        }
+        
     } catch (error) {
+        console.log(error.message);
         next(error);
     }
 };

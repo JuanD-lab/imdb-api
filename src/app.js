@@ -19,6 +19,7 @@ const upload = multer({ storage: storage });
 const actorsRoutes = require("./routes/actors.routes");
 const moviesRoutes = require("./routes/movies.routes");
 const directorsRoutes = require("./routes/directors.routes");
+const genresRoutes = require("./routes/genres.routes");
 const usersRoutes = require("./routes/users.routes");
 const loggin = require("./routes/login.routes");
 
@@ -45,13 +46,14 @@ app.post("/api/v1/gallery", upload.single("image"), (req, res) => {
     }
 });
 app.use("/", loggin);
+
 //mailing for reset pass
 app.post("/api/v1/reset-password", (req, res) => {
-        emailOptions.subject = "Reset password";
-        emailOptions["template"] = "email";
-        emailOptions["context"] = { title: "Restore password" };
-        sendEmail(emailOptions);
-    
+    emailOptions.subject = "Reset password";
+    emailOptions["template"] = "email";
+    emailOptions["context"] = { title: "Restore password" };
+    sendEmail(emailOptions);
+
     res.status(200).json("Correo enviado");
 });
 
@@ -60,16 +62,19 @@ app.use("/api/v1/", actorsRoutes);
 app.use("/api/v1/", directorsRoutes);
 app.use("/api/v1/", moviesRoutes);
 app.use("/api/v1/", usersRoutes);
+app.use("/api/v1/", genresRoutes);
 
 //Error handler
 app.use((err, req, res, next) => {
-    console.log(err.message);
     if (err.name === "SequelizeValidationError") {
-        const errObj = {};
+        const errObj = { message: "Validation error", errors: [] };
         err.errors.map((er) => {
-            errObj[er.path] = er.message;
+            errObj.errors.push({ [er.path]: er.message });
         });
-        return res.status(400).send(errObj);
+        return res.status(403).send(errObj);
+    }
+    if (err.name === "SequelizeUniqueConstraintError") {
+        return res.status(409).send({ message: "Register already exists" });
     }
     return res
         .status(500)

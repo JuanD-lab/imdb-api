@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "IMDB REST API",
-        "version": "1.0",
+        "version": "1.0.1",
         "description": "REST API para poder obtener la información acerca de películas, series, actores y directores del cine."
     },
     "servers": [
@@ -43,6 +43,59 @@
                         "description": "Se ha creado un actor satisfactoriamente"
                     }
                 }
+            }
+        },
+        "/actors/{id}":{
+            "get": {
+                "description": "Obtener un actor en particular",
+                "parameters":[
+                    {"in": "path", "required": true, "name": "id", "schema": {"type": "integer"}}
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Actor gotten correctly"
+                    }
+                },
+                "security": [{
+                    "jwt_token": []
+                }],
+                "tags": ["Actors"]
+            },
+            "delete": {
+                "description": "To delete an actor",
+                "parameters":[
+                    {"in": "path", "required": true, "name": "id", "schema": {"type": "integer"}}
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Actor deleted"
+                    }
+                },
+                "security": [{
+                    "jwt_token": []
+                }],
+                "tags": ["Actors"]
+            },
+            "put": {
+                "description": "To update an actor",
+                "parameters":[
+                    {"in": "path", "required": true, "name": "id", "schema": {"type": "integer"}}
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Actor updated"
+                    }
+                },
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Actor"
+                            }
+                        }
+                    }
+                },
+                "tags": ["Actors"]
             }
         },
         "/directors":{
@@ -99,6 +152,35 @@
                 "responses": {
                     "201": {
                         "description": "Se ha creado una película satisfactoriamente"
+                    }
+                }
+            }
+        },
+        "/genres":{
+            "get": {
+                "description": "Obtener todos los géneros de la DB",
+                "tags": ["Genres"],
+                "responses": {
+                    "200":{
+                        "description": "Lista de géneros"
+                    }
+                }
+            },
+            "post":{
+                "description": "Crear un género",
+                "tags": ["Genres"],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Genre"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Se ha creado un género satisfactoriamente"
                     }
                 }
             }
@@ -170,6 +252,16 @@
                         "type": "string",
                         "description": "Year of release",
                         "example": "1990/02/01"
+                    }
+                }
+            },
+            "Genre":{
+                "properties": {
+                    "name": {
+                        "type": "string"                        
+                    },
+                    "active": {
+                        "type": "boolean"
                     }
                 }
             }
