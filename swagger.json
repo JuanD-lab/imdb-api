@@ -16,6 +16,17 @@
         }
     ],
     "paths": {
+        "/users":{
+            "post": {
+                "description": "Crear un nuevo usuario (registro)",
+                "tags": ["Users"],
+                "responses": {
+                    "201":{
+                        "description": "Registro de usuario"
+                    }
+                }
+            }
+        },
         "/actors":{
             "get": {
                 "description": "Obtener todos los actores de la DB",
@@ -182,12 +193,29 @@
     },
     "components": {
         "schemas": {
-            "Actor":{
+            "Users":{
                 "properties": {
-                    "firstname": {
+                    "first_name": {
                         "type": "string"                        
                     },
-                    "lastname": {
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "example@gmail.com"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Actor":{
+                "properties": {
+                    "first_name": {
+                        "type": "string"                        
+                    },
+                    "lastn_ame": {
                         "type": "string"
                     },
                     "dob": {
@@ -210,10 +238,10 @@
             },
             "Director":{
                 "properties": {
-                    "firstname": {
+                    "first_name": {
                         "type": "string"                        
                     },
-                    "lastname": {
+                    "last_name": {
                         "type": "string"
                     },
                     "dob": {
