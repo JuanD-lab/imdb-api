@@ -18,6 +18,9 @@ module.exports = {
       description: {
         type: Sequelize.CHAR
       },
+      thumb: {
+        type: Sequelize.STRING
+      },
       created_at: {
         allowNull: false,
         defaultValue: Sequelize.fn('NOW'),

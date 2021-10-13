@@ -34,7 +34,7 @@ const list = async(req, res, next) => {
                 }
             ]
         })
-        res.status(200)
+        res.status(200).json(results)
     } catch (error) {
         next(error)
     }
