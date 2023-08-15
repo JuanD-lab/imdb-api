@@ -25,12 +25,14 @@
   "devDependencies": {
     "jest": "^27.2.5",
     "nodemon": "^2.0.7",
+    "sequelize-cli": "^6.6.1",
     "supertest": "^6.1.6"
   },
   "scripts": {
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server.js",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "migrate": "sequelize-cli db:migrate && sequelize-cli db:seed:all"
   },
   "author": "JuanD-lab",
   "license": "ISC"
