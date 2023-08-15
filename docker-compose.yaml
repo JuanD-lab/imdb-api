@@ -1,0 +1,73 @@
+version: '3.8'
+
+networks:
+  default:
+    name: imdb
+    driver: bridge
+
+
+x-envs: &envs
+  environment:
+    NODE_ENV: development
+    DB_USER: admin
+    DB_PASSWORD: admin123
+    DB_HOST: imdb-db
+    DB_NAME: imdb
+    DB_PORT: 5432
+    JWT_KEY:
+    G_ID_CLIENT:
+    G_SECRET_CLIENT:
+    G_REFRESH_TOKEN:
+    G_USER:
+
+services:
+  imdb-db:
+    image: postgres:15
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-q', '-d', 'imdb', '-U', 'admin', '--host', '127.0.0.1']
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    container_name: imdb-db
+    volumes:
+      - imdb-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: imdb
+    ports:
+      - '5432:5432'
+
+  migration:
+    <<: [*envs]
+    image: imdb-migration
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 0
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: migration
+    container_name: migration
+    depends_on:
+      imdb-db:
+        condition: service_healthy
+
+  imdb-api:
+    <<: [*envs]
+    image: imdb-api
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: production
+    container_name: imdb-api
+    ports:
+      - '8000:8000'
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+
+volumes:
+  imdb-data:

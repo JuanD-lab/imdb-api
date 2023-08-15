@@ -93,6 +93,15 @@ your preferred browser.
 127.0.0.1:8000
 ```
 
+## Docker-Compose
+To start the development environment using docker-compose, you can just start everything (postgres, migrations and the app) with the following commands:
+
+```sh
+docker-compose build
+docker-compose up
+```
+
+
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
    [node.js]: <https://img.icons8.com/color/96/000000/nodejs.png>
